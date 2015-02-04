@@ -70,6 +70,30 @@ module PurplishLayout
 
     def layout(s, metrics=nil, options=0, views=nil)
       views ||= views_mapping
+      if options != 0
+        options = case options
+                  when :align_left
+                    NSLayoutFormatAlignAllLeft
+                  when :align_right
+                    NSLayoutFormatAlignAllRight
+                  when :align_top
+                    NSLayoutFormatAlignAllTop
+                  when :align_bottom
+                    NSLayoutFormatAlignAllBottom
+                  when :align_leading
+                    NSLayoutFormatAlignAllLeading
+                  when :align_trailing
+                    NSLayoutFormatAlignAllTrailing
+                  when :align_center_x
+                    NSLayoutFormatAlignAllCenterX
+                  when :align_center_y
+                    NSLayoutFormatAlignAllCenterY
+                  when :align_baseline
+                    NSLayoutFormatAlignAllBaseline
+                  else
+                    options
+                  end
+      end
       #Workaround, must wrap views with NSDictionary, otherwise doesn't work for RubyMotion
       c = NSLayoutConstraint.constraintsWithVisualFormat(s, options:options, metrics:metrics, views:NSDictionary.dictionaryWithDictionary(views))
       self.last_constraint = c

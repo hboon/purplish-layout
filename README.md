@@ -52,6 +52,15 @@ You can mix the 2 creation methods:
 end
 ```
 
+When specifying options argument describing the attribute and direction of layout, you can also use symbols such as :align_center_y (for NSLayoutFormatAlignAllCenterY). They are interchangeable. The options are available as `:align_left`, `:align_right`, `:align_top`, `:align_bottom`, `:align_leading`, `:align_trailing`, `:align_center_x`, `:align_center_y`, `:align_baseline`.
+
+ie. these are equivalent:
+
+```ruby
+cv.h '|[v1][v2][v3]|', nil, NSLayoutFormatAlignAllCenterY
+cv.h '|[v1][v2][v3]|', nil, :align_center_y
+```
+
 There are 2 attributes in the constraint proxies that you would occasionally find useful:
 
 * `last_constraint` returns the last `NSLayoutConstraint` created. It's useful if you want to hold on to a `NSLayoutConstraint` and modify it in an animation.
