@@ -30,7 +30,7 @@ Send `#constraints` with a block to an array with an even number of elements. Th
 
 If there are n views involved, there should be n*2 elements in the array. The block takes n+1 arguments, and the last object is the dictionary mapping generated from the array (usually unused) and the rest of the elements are constraint proxy objects representing each view, in the order specified in the array.
 
-To avoid confusion, it's best to keep the variable names in the block the same as the string names in the array. This syntax can be improved when Proc#parameters is available.
+To avoid confusion, it's best to keep the variable names in the block the same as the string names in the array.
 
 With the exception of the first view listed in the array, `translatesAutoresizingMaskIntoConstraints` is automatically set to `false` for every view, so you'll want to specify the outermost view as the first pair.
 
@@ -61,10 +61,39 @@ cv.h '|[v1][v2][v3]|', nil, NSLayoutFormatAlignAllCenterY
 cv.h '|[v1][v2][v3]|', nil, :align_center_y
 ```
 
+You can write equality “statements” in a single line:
+
+```ruby
+b0.center_y = b1.center_y = b2.center_y = b3.center_y = b4.center_y
+```
+
 There are 2 attributes in the constraint proxies that you would occasionally find useful:
 
 * `last_constraint` returns the last `NSLayoutConstraint` created. It's useful if you want to hold on to a `NSLayoutConstraint` and modify it in an animation.
 * `next_priority` sets the priority for the next `NSLayoutConstraint` you create.
+
+Quirks & Gotchas
+---
+1\. In a better world, the first code example would have been:
+
+```ruby
+[inner_view, post_count_label].constraints do |celf, l, _|
+  celf.h '|[l]|'
+  celf.v '|-m-[l]-m-|', {'m' => 7}
+end
+```
+
+But since Proc#parameters isn't available, the syntax to invoke constraints requires duplication of names. This syntax can be improved when Proc#parameters is available.
+
+2\. In RubyMotion, local variables aren't shadowed correctly by dynamic variables. So try not to use the same names for the block args as the variables holding your views. Referring to the 1st example, if we use `post_count_label` instead of `l`:
+
+```ruby
+['celf', inner_view, 'post_count_label', post_count_label].constraints do |celf, post_count_label, _|
+  celf.h '|[post_count_label]|'
+  celf.v '|-m-[post_count_label]-m-|', {'m' => 7}
+end
+#At this point, after the block, post_count_label is the constraint proxy, and not the label as one might expect.
+```
 
 Installation
 ---
