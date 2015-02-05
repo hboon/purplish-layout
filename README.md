@@ -52,7 +52,7 @@ You can mix the 2 creation methods:
 end
 ```
 
-When specifying options argument describing the attribute and direction of layout, you can also use symbols such as :align_center_y (for NSLayoutFormatAlignAllCenterY). They are interchangeable. The options are available as `:align_left`, `:align_right`, `:align_top`, `:align_bottom`, `:align_leading`, `:align_trailing`, `:align_center_x`, `:align_center_y`, `:align_baseline`.
+When specifying options argument describing the attribute and direction of layout, you can also use symbols such as `:align_center_y` (for `NSLayoutFormatAlignAllCenterY`). They are interchangeable. The options are available as `:align_left`, `:align_right`, `:align_top`, `:align_bottom`, `:align_leading`, `:align_trailing`, `:align_center_x`, `:align_center_y`, `:align_baseline`.
 
 ie. these are equivalent:
 
@@ -83,7 +83,7 @@ Quirks & Gotchas
 end
 ```
 
-But since Proc#parameters isn't available, the syntax to invoke constraints requires duplication of names. This syntax can be improved when Proc#parameters is available.
+But since `Proc#parameters` isn't available, the syntax to invoke constraints requires duplication of names. This syntax can be improved when `Proc#parameters` is available.
 
 2\. In RubyMotion, local variables aren't shadowed correctly by dynamic variables. So try not to use the same names for the block args as the variables holding your views. Referring to the 1st example, if we use `post_count_label` instead of `l`:
 
