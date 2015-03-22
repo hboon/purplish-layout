@@ -25,6 +25,12 @@ module PurplishLayout
       ConstraintProxy.new(view, attribute, multiplier, -aNumber)
     end
 
+    def **(aNumber)
+      ConstraintProxy.new(view, attribute, multiplier, constant).tap do |c|
+        c.next_priority = aNumber
+      end
+    end
+
     def next_priority=(v)
       @next_priority = v
     end
@@ -33,9 +39,10 @@ module PurplishLayout
       if rhs.kind_of? self.class
         owner = rhs.view.common_superview(view)
         c = NSLayoutConstraint.constraintWithItem(view, attribute:attribute.to_layout_attribute, relatedBy:@operator, toItem:rhs.view, attribute:rhs.attribute.to_layout_attribute, multiplier:rhs.multiplier, constant:rhs.constant)
-        if next_priority
-          c.priority = next_priority
+        if next_priority || rhs.next_priority
+          c.priority = next_priority || rhs.next_priority
           self.next_priority = nil
+          rhs.next_priority = nil
         end
         #puts "addConstraint: #{c.inspect}"
         owner.addConstraint(c)

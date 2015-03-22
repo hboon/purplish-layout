@@ -67,10 +67,20 @@ You can write equality “statements” in a single line:
 b0.center_y = b1.center_y = b2.center_y = b3.center_y = b4.center_y
 ```
 
+You can specify the priority of a constraint using the ** operator:
+
+```ruby
+b0.center_y = b1.center_y ** (UILayoutPriorityRequired-1)
+(b0 ** (UILayoutPriorityRequired-1)).center_y = b1.center_y
+(b0 ** (UILayoutPriorityRequired-1)).width = 10
+```
+
+The 1st and 2nd lines in the last example are equivalent, but the 3rd line — which has a constant on the right hand side — is an example where the priority has to be assigned on the left hand side of the expression.
+
 There are 2 attributes in the constraint proxies that you would occasionally find useful:
 
 * `last_constraint` returns the last `NSLayoutConstraint` created. It's useful if you want to hold on to a `NSLayoutConstraint` and modify it in an animation.
-* `next_priority` sets the priority for the next `NSLayoutConstraint` you create.
+* `next_priority` sets the priority for the next `NSLayoutConstraint` you create. It has the same effect as the ** operator.
 
 Quirks & Gotchas
 ---
