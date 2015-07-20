@@ -28,4 +28,11 @@ module CanBeConstrained
     end
     result
   end
+
+  def filled_by(aView)
+    ['celf', self, 'v', aView].constraints do |celf, v, _|
+      celf.h '|[v]|'
+      celf.v '|[v]|'
+    end
+  end
 end
