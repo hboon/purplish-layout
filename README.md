@@ -82,6 +82,32 @@ There are 2 attributes in the constraint proxies that you would occasionally fin
 * `last_constraint` returns the last `NSLayoutConstraint` created. It's useful if you want to hold on to a `NSLayoutConstraint` and modify it in an animation.
 * `next_priority` sets the priority for the next `NSLayoutConstraint` you create. It has the same effect as the ** operator.
 
+When working with arrays of elements, instead of doing this:
+
+```ruby
+['tb', toolbar, 'b0', btns[0], 'b1', btns[1], 'b2', btns[2], 'b3', btns[3], 'b4', btns[4], 'b5', btns[5], 'b6', btns[6], 'b7', btns[7], 'b8', btns[8], 'b9', btns[9], 'b10', btns[10], 'b11', btns[11], 'b12', btns[12]].constraints do |tb, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, _|
+  b0.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = b7.width = b8.width = b9.width = b10.width = b11.width = b12.width
+end
+```
+
+or:
+
+```ruby
+['tb', toolbar, 'b0', btns[0], 'b1', btns[1], 'b2', btns[2], 'b3', btns[3], 'b4', btns[4], 'b5', btns[5], 'b6', btns[6], 'b7', btns[7], 'b8', btns[8], 'b9', btns[9], 'b10', btns[10], 'b11', btns[11], 'b12', btns[12]].constraints do |tb, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, _|
+  [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12].constraint_same_width
+end
+```
+You can do this:
+
+```ruby
+['tb', toolbar, 'buttons', btns].constraints do |tb, buttons, _|
+  buttons.constraint_same_width
+  buttons.constraint_same_height
+end
+```
+
+`#constraints` automatically wrap arrays of views with another array of proxy objects.
+
 Quirks & Gotchas
 ---
 1\. In a better world, the first code example would have been:
