@@ -101,8 +101,8 @@ module PurplishLayout
                     options
                   end
       end
-      #Workaround, must wrap views with NSDictionary, otherwise doesn't work for RubyMotion
-      c = NSLayoutConstraint.constraintsWithVisualFormat(s, options:options, metrics:metrics, views:NSDictionary.dictionaryWithDictionary(views))
+      #workaround1 dup to workaround crash for using WeakRef with Xcode 7 beta
+      c = NSLayoutConstraint.constraintsWithVisualFormat(s, options:options, metrics:metrics, views:NSDictionary.dictionaryWithDictionary(views.dup))
       self.last_constraint = c
       if next_priority
         c.each {|e|e.priority = next_priority}
