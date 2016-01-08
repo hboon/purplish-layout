@@ -2,6 +2,12 @@ unless defined?(Motion::Project::Config)
   raise "This file must be required within a RubyMotion project Rakefile."
 end
 
+class Motion::Project::App
+  def self.osx?
+    respond_to?(:template) && template == :osx
+  end
+end
+
 Motion::Project::App.setup do |app|
   Dir.glob(File.join(File.dirname(__FILE__), 'purplish-layout/**/*.rb')).each do |file|
     exclude = false
