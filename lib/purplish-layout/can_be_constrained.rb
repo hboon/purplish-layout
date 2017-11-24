@@ -28,4 +28,16 @@ module CanBeConstrained
     end
     result
   end
+
+  def all_subviews
+    subviews.map { |e| [e] + e.all_subviews }.flatten
+  end
+
+  def all_subviews_and_self
+    all_subviews + [self]
+  end
+
+  def constraints_for_view(view)
+    all_subviews_and_self.map {|e| e.constraints.select { |e| e.firstItem == view || e.secondItem == view }}.flatten
+  end
 end
