@@ -37,7 +37,14 @@ module CanBeConstrained
     all_subviews + [self]
   end
 
-  def constraints_for_view(view)
-    all_subviews_and_self.map {|e| e.constraints.select { |e| e.firstItem == view || e.secondItem == view }}.flatten
+  def constraints_for_view(view, direction=nil)
+    constraints = all_subviews_and_self.map {|e| e.constraints.select { |e| e.firstItem == view || e.secondItem == view }}.flatten
+    if direction == :horizontal
+      constraints.select {|e| e.horizontal? }
+    elsif direction == :vertical
+      constraints.select {|e| e.vertical? }
+    else
+      constraints
+    end
   end
 end

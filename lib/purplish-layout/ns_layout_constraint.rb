@@ -24,4 +24,12 @@ class NSLayoutConstraint
       end
     end
   end
+
+  def horizontal?
+    [NSLayoutAttributeLeft, NSLayoutAttributeRight, NSLayoutAttributeLeading, NSLayoutAttributeTrailing, NSLayoutAttributeWidth, NSLayoutAttributeCenterX, NSLayoutAttributeLeftMargin, NSLayoutAttributeRightMargin, NSLayoutAttributeLeadingMargin, NSLayoutAttributeTrailingMargin, NSLayoutAttributeCenterXWithinMargins].include? firstAttribute
+  end
+
+  def vertical?
+    !horizontal?
+  end
 end
